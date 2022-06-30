@@ -1,0 +1,44 @@
+20
+1 string
+1 strong
+1 string
+1 strike
+1 strike
+1 stress
+1 stress
+1 stress
+1 str
+1 string
+1 strong
+1 string
+1 strike
+1 strike
+1 stress
+1 stress
+1 stress
+1 str
+2 s
+4 lol 
+
+
+
+19
+1 string
+1 strong
+1 string
+1 strike
+2 stri
+2 stro
+1 strike
+2 st
+2 stra
+5 strike
+2 st
+5 stress
+1 stress
+1 stress
+1 stress
+1 str
+2 str
+2 stre
+4 lol
