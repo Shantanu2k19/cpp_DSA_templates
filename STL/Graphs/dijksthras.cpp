@@ -66,6 +66,40 @@ class graph{
         return dist[destination];
     }
     
+    int dijkstrasWithPQ(int src, int destination){
+        vector<int> distance(v, INT_MAX);
+        distance[src]=0;
+        
+        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq;
+        pq.push({0,src});
+
+        while(!pq.empty()){
+            int parNde = pq.top().second;
+            int parDis = pq.top().first;
+            pq.pop();
+            if (parDis > distance[parNde]) {
+                cout<<"skipping for"<<parNde<<endl;
+                continue;
+            }
+
+            for(auto nbr: l[parNde]){
+                int nbrNde = nbr.second;//weight first in adjList 
+                int nbrDis = nbr.first;
+                int newDis = parDis + nbrDis;
+
+                if(newDis<distance[nbrNde]){
+                    distance[nbrNde]=newDis;
+                    pq.push({newDis, nbrNde});
+                }
+            }
+        }
+        //single source shortest path to all other nodes
+        for(int i=0;i<v;i++){
+            cout<<"Node "<<i<<", distance="<<distance[i]<<endl;
+        }
+
+        return distance[destination];
+    }
 };
 
 int main(){
@@ -80,7 +114,9 @@ int main(){
     g.printGraph();
 
 
-    cout<<g.dijkstra(0,4)<<endl;
+    cout<<"set=>\n"<<g.dijkstra(0,4)<<endl;
+    cout<<"pq=>\n"<<g.dijkstrasWithPQ(0,4)<<endl;
 
     cout<<"\n_____________________________\n";
+    return 0;
 }                                        
