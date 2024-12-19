@@ -17,7 +17,7 @@ https://www.geeksforgeeks.org/kmp-algorithm-for-pattern-searching/
 using namespace std;
 
 void constructLPS(string pat, vector<int> &lps){
-    lps[0]=0;  //string with len 0 will no no common pre or suff
+    lps[0]=0;  //string with len 0 with no common prefix or suffix
 
     int j = 0;  //lps[0]
     int i=1;

@@ -19,24 +19,26 @@ class Graph{
     bool dfsHelper(int currNode, vector<bool> &visited, vector<bool> &pathVisited){
         visited[currNode] = true;
         pathVisited[currNode] = true;
-        bool ans = false;
+
         for(int nbr: adjList[currNode]){
             if(pathVisited[nbr]) return true;
             
             if(!visited[nbr]){
-                ans = ans || dfsHelper(nbr, visited, pathVisited);
+                if(dfsHelper(nbr, visited, pathVisited)) return true;
             }
         }
 
         pathVisited[currNode] = false;
-        return ans;
+        return false;
     }
 
     bool detectCycle(){
+        vector<bool> visited(v+1, false);
+        vector<bool> pasthVis(v+1, false);
+        
         for(int i=1;i<=v;i++){
-            vector<bool> visited(v+1, false);
-            vector<bool> pasthVis(v+1, false);
-            if(dfsHelper(i, visited, pasthVis)) return true;
+            if(!visited[i] && dfsHelper(i, visited, pasthVis))
+                return true;
         }
         return false;
     }
@@ -53,7 +55,10 @@ int main(){
     ->2---|
 
     */
-    // vector<vector<int>> edges = {{1,4}, {4,2}, {3,1}, {2,3}};
+    g.makeGraph(edges);
+    cout<<g.detectCycle()<<endl;
+    
+    vector<vector<int>> edges2 = {{1,4}, {4,2}, {3,1}, {2,3}};
     /*
 
     3->1->4
@@ -62,7 +67,9 @@ int main(){
     --2<--|
 
     */
-    g.makeGraph(edges);
-    cout<<g.detectCycle()<<endl;
+    Graph g2(4);
+    g2.makeGraph(edges2);
+    cout<<g2.detectCycle()<<endl;
+
     cout<<"\n______\n";
 }
