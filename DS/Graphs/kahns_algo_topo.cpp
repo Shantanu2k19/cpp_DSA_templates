@@ -34,7 +34,7 @@ indegree -> number of incoming edges to a node
 #include<bits/stdc++.h>
 using namespace std;
 
-vector<int> topologicalSort(vector<vector<int>> &graph, int n){
+vector<int> topologicalSortKahn(vector<vector<int>> &graph, int n){
 
     vector<int> indegree(n, 0);
     for(auto x: graph){
@@ -69,11 +69,49 @@ vector<int> topologicalSort(vector<vector<int>> &graph, int n){
     return ans;
 }
 
+
+void dfsHelper(vector<vector<int>> &graph, vector<bool> &visited, int i, stack<int> &dfsCompleted){
+    visited[i]=true;
+
+    for(auto nbr: graph[i]){
+        if(!visited[nbr]){
+            dfsHelper(graph, visited, nbr, dfsCompleted);
+        }
+    }
+
+    dfsCompleted.push(i);
+}
+
+vector<int> topologicalSortDFS(vector<vector<int>> &graph, int n){
+    vector<bool> visited(n, false);
+    stack<int> dfsCompleted;
+
+    for(int i=0;i<n;i++){
+        if(!visited[i]){
+            dfsHelper(graph, visited, i, dfsCompleted);
+        }
+    }
+
+    vector<int> ans;
+    while(!dfsCompleted.empty()){
+        ans.push_back(dfsCompleted.top());
+        dfsCompleted.pop();
+    }
+
+    return ans;
+}
+
 int main()
 {
     vector<vector<int>> edges = {
         {5,0}, {5,2}, {4,0}, {4,1}, {2,3}, {3,1}
     };
+    /*
+            5-->0<--4
+            |       |
+            \/      \/
+            2-->3-->1
+    */
     int n = 6;
 
     vector<vector<int>> graph(n);
@@ -82,8 +120,15 @@ int main()
         graph[x[0]].push_back(x[1]);
     }
 
-    vector<int> topo = topologicalSort(graph, n);
+    vector<int> topo = topologicalSortKahn(graph, n);
     for(auto x: topo){
+        cout<<x<<", ";
+    }
+
+    cout<<endl;
+
+    vector<int> topo2 = topologicalSortDFS(graph, n);
+    for(auto x: topo2){
         cout<<x<<", ";
     }
 
