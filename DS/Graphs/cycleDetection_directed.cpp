@@ -1,3 +1,6 @@
+// cycle detection
+// using dfs (path already visited)
+
 #include<bits/stdc++.h>
 using namespace std;
 

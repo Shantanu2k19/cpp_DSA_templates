@@ -1,6 +1,15 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+/*
+TC:
+O((V+E)logV)
+V:vertices, E:edges
+
+Inserting/updating elements in the priority queue takes O(logV).
+Each vertex is processed once, and each edge is relaxed once.
+*/
+
 class graph{
     int v;
     list<pair<int, int>> *l; 
