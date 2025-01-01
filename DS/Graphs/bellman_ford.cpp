@@ -1,6 +1,9 @@
 // Dijkstras fail for negative edges graph
 // shorter oath may exist in longer route through negative edges
 
+//for both direacted and undirected graph (primarly for directed graph)
+//time comp: O(VxE)
+
 #include<bits/stdc++.h>
 using namespace std;
 
