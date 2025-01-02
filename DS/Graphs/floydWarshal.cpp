@@ -45,6 +45,11 @@ class graph{
         }
 
         //print distance matrix
+
+        /*
+        
+        If any value is negative in matrix, thr graph contains negative edge cycle 
+        */
         cout<<"\t";
         for(int j=0;j<v;j++){
             cout<<j<<"\t";
