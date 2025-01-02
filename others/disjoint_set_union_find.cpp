@@ -41,14 +41,10 @@ public:
             par[parY] = parX;
         }
         else{
-            par[parY] = par[parX];
+            par[parY] = parX;
             rank[parX] = rank[parX]+1;
         }
     }
-
-
-
-
 };
 
 int main(){
@@ -58,9 +54,4 @@ int main(){
     };
 
     UnionSet u(5);
-
-
-
-    
-
 }
