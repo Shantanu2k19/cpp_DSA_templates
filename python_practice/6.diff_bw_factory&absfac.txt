@@ -1,0 +1,61 @@
+Factory: creates a single product based on specific type,
+Abstract: creates a family of related products.
+
+No of object: Factory(1), abstract(multiple (eg. buttons, checkboxes))
+
+simple vs complex 
+
+factory: creates different types of single class. 
+        Animal->dog, cat 
+abstract: creating related component like GUI element(buttons, checkboxes)
+
+
+
+
+Factory:
+        +------------------+             
+        |  AnimalFactory   |           
+        +------------------+             
+        | + create_animal()|            
+        +------------------+             
+                |
+    +--------------------+------------------+
+    |                                    |
++------------+                      +------------+
+|   Dog      |                      |   Cat      |
++------------+                      +------------+
+| + speak()  |                      | + speak()  |
++------------+                      +------------+
+
+
+
+
+
+
+Abstract factory : 
+            +------------------------+
+            |     GUIFactory         |
+            +------------------------+
+            | + create_button()       |
+            | + create_checkbox()     |
+            +------------------------+
+                        |
+            +--------------------------+
+          /                           \
++-------------------+         +------------------+
+|   WindowsFactory  |         |   MacFactory     |
++-------------------+         +------------------+
+| + create_button() |         | + create_button() |
+| + create_checkbox()|        | + create_checkbox()|
++-------------------+         +------------------+
+          |                           |
+  +---------------+              +--------------+
+  | WindowsButton |              | MacButton    |
+  +---------------+              +--------------+
+  | + render()    |              | + render()   |
+  +---------------+              +--------------+
+  +------------------+          +-------------------+
+  | WindowsCheckbox  |          | MacCheckbox       |
+  +------------------+          +-------------------+
+  | + render()       |          | + render()        |
+  +------------------+          +-------------------+
