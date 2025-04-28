@@ -24,3 +24,7 @@ else:
   print("The file does not exist")
 
 # os.rmdir()
+
+with open("demo.txt", "r") as f:  # Auto-closes file
+    for x in f:
+        print(x.strip())  # Remove extra newlines

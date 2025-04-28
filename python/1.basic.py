@@ -37,7 +37,9 @@ print(x)
 
 # random number
 import random
-random.range(1,10)  #gives between 1 and 9
+print(random.randrange(1, 10))  #gives between 1 and 10
+print(random.randrange(10))  # Gives a number between 0 and 9
+
 
 
 x = int('23')
@@ -64,8 +66,8 @@ price = 0.123
 txt = f"price is {price:.2f}" #2 decimal places for float 
 
 a.count('an') #gives 1
-a.find('ha') #gives index, i.e. 1
-a.index('a') #gives 2 
+a.find('ha') #gives index, i.e. 1 else -1
+a.index('a') #gives 2, ValueError if not found
 
 
 
@@ -103,8 +105,26 @@ ll.sort(key=str.lower)
 
 ll.reverse()
 
-#list copy 
-mylist = ll.copy() #creates shallow copy, reference only
+
+
+
+###############
+
+##COPYING
+
+ll = [1,2,3, [45,66]]
+
+
+ll2 = ll  #no copy, assignment, changes in ll2 creates changes in ll
+
+ll2 = ll.copy() #shallow copy, top level copy only, 
+#changes on ll2 does not reflect in ll, but nested objects are still shares
+#ll2[3][1] will change the value in ll
+
+import copy
+ll2 = copy.deepcopy(ll) #fully independent copy, including nested elements
+
+###############
 
 #slice oprator 
 list2 = ll[:3]  #n-1 elements from start 0,1,2

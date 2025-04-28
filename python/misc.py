@@ -20,5 +20,22 @@ finally:
 
 
 x = -1
-if x<0:
-    raise Exception("below zero!!")
+# if x<0:
+#     raise Exception("below zero!!")
+
+class MyException(Exception):
+    pass
+
+if 0:
+    raise MyException("This is a custom exception!")
+
+
+class myExceptionWithMssg(Exception):
+    def __init__(self, age, message="age must be betweeb 18 and 60"):
+        self.age = age
+        self.message = message
+        super().__init__(f"{message}: provided : {age}")
+
+
+if 1:
+    raise myExceptionWithMssg(12)

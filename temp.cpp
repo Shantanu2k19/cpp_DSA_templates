@@ -1,52 +1,68 @@
-// C++ code to demonstrate operations of Binary Index Tree 
-#include <bits/stdc++.h> 
-
+#include<bits/stdc++.h>
 using namespace std; 
 
-class Solution {
-public:
-    vector<int> leftmostBuildingQueries(vector<int>& heights,
-                                        vector<vector<int>>& queries) {
-        vector<pair<int, int>> monoStack;
-        vector<int> result(queries.size(), -1);
-        vector<vector<pair<int, int>>> newQueries(heights.size());
-        for (int i = 0; i < queries.size(); i++) {
-            int a = queries[i][0];
-            int b = queries[i][1];
-            if (a > b) swap(a, b);
-            if (heights[b] > heights[a] || a == b)
-                result[i] = b;
-            else
-                newQueries[b].push_back({heights[a], i});
-        }
+ vector<int> topologicalSortKahn(vector<vector<int>> graph, int n){
+    vector<int> indegree(n,0);
 
-        for (int i = heights.size() - 1; i >= 0; i--) {
-            int monoStackSize = monoStack.size();
-            for (auto& [a, b] : newQueries[i]) {
-                int position = search(a, monoStack);
-                if (position < monoStackSize && position >= 0)
-                    result[b] = monoStack[position].second;
+    for(auto x: graph){
+        for(auto y: x){
+            indegree[y]++;
+        }
+    }
+
+    vector<int> ans;
+    queue<int> qu;
+    for(int i=0;i<n;i++){
+        if(indegree[i]==0) qu.push(i);
+    }
+
+    while(!qu.empty()){
+        int frnt = qu.front();
+        qu.pop();
+        ans.push_back(frnt);
+        for(auto nbr: graph[frnt]){
+            indegree[nbr]--;
+            if(indegree[nbr]==0){
+                qu.push(nbr);
             }
-            while (!monoStack.empty() && monoStack.back().first <= heights[i])
-                monoStack.pop_back();
-            monoStack.push_back({heights[i], i});
         }
-        return result;
+    }
+    return ans;
+ }
+
+ vector<int> topologicalSortDFS(vector<vector<int>> graph, int n){
+    
+ }
+
+int main(){
+    vector<vector<int>> edges = {
+        {5,0}, {5,2}, {4,0}, {4,1}, {2,3}, {3,1}
+    };
+    /*
+            5-->0<--4
+            |       |
+            \/      \/
+            2-->3-->1
+    */
+    int n = 6;
+
+    vector<vector<int>> graph(n);
+
+    for(auto x: edges){
+        graph[x[0]].push_back(x[1]);
     }
 
-private:
-    int search(int height, vector<pair<int, int>>& monoStack) {
-        int left = 0;
-        int right = monoStack.size() - 1;
-        int ans = -1;
-        while (left <= right) {
-            int mid = (left + right) / 2;
-            if (monoStack[mid].first > height) {
-                ans = max(ans, mid);
-                left = mid + 1;
-            } else
-                right = mid - 1;
-        }
-        return ans;
+    vector<int> topo = topologicalSortKahn(graph, n);
+    for(auto x: topo){
+        cout<<x<<", ";
     }
-};
+
+    cout<<endl;
+
+    vector<int> topo2 = topologicalSortDFS(graph, n);
+    for(auto x: topo2){
+        cout<<x<<", ";
+    }
+
+    cout<<"\n________\n";
+}
