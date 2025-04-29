@@ -1,39 +1,50 @@
 #include<bits/stdc++.h>
 using namespace std; 
 
- vector<int> topologicalSortKahn(vector<vector<int>> graph, int n){
-    vector<int> indegree(n,0);
 
-    for(auto x: graph){
-        for(auto y: x){
-            indegree[y]++;
-        }
+class Graph{
+    public:
+    int v;
+    unordered_map<int, vector<int>> adjList;
+
+    Graph(int v){
+        this->v = v;
     }
 
-    vector<int> ans;
-    queue<int> qu;
-    for(int i=0;i<n;i++){
-        if(indegree[i]==0) qu.push(i);
+    void addEdge(int src, int des){
+        adjList[src].push_back(des);
+        adjList[des].push_back(src);
     }
 
-    while(!qu.empty()){
-        int frnt = qu.front();
-        qu.pop();
-        ans.push_back(frnt);
-        for(auto nbr: graph[frnt]){
-            indegree[nbr]--;
-            if(indegree[nbr]==0){
-                qu.push(nbr);
+    bool cycleExistDfs(int i, vector<bool> &visited, vector<bool> &pathVis){
+        visited[i]=true;    
+        pathVis[i]=true;
+
+        for(auto nbr: adjList[i]){
+            if(pathVis[nbr]) return true;
+
+            if(!visited[nbr]){
+                if(cycleExistDfs(nbr, visited, pathVis)) return true;
             }
         }
+        pathVis[i]=false;
+        return false;
     }
-    return ans;
- }
 
- vector<int> topologicalSortDFS(vector<vector<int>> graph, int n){
-    
- }
+    void detectCycle(){
+        vector<bool> visited(v, false);
+        vector<bool> pathVis(v, false);
 
+        for(int i=0;i<v;i++){
+            if(!visited[i] && cycleExistDfs(i, visited, pathVis)){
+                cout<<"exist";
+                return;
+            }
+        }
+        cout<<"no cycle";
+    }
+
+};
 int main(){
     vector<vector<int>> edges = {
         {5,0}, {5,2}, {4,0}, {4,1}, {2,3}, {3,1}
@@ -46,23 +57,12 @@ int main(){
     */
     int n = 6;
 
-    vector<vector<int>> graph(n);
+    Graph g(n);
 
     for(auto x: edges){
-        graph[x[0]].push_back(x[1]);
+        g.addEdge(x[0], x[1]);
     }
-
-    vector<int> topo = topologicalSortKahn(graph, n);
-    for(auto x: topo){
-        cout<<x<<", ";
-    }
-
-    cout<<endl;
-
-    vector<int> topo2 = topologicalSortDFS(graph, n);
-    for(auto x: topo2){
-        cout<<x<<", ";
-    }
+    g.detectCycle();
 
     cout<<"\n________\n";
 }

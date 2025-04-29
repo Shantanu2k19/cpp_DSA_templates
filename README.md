@@ -1,5 +1,6 @@
 cycle detection:
-normal path following, saving previous path 
+directed graph: dfs with saving prevPath and visited array
+undirected graph: df with parent 
 
 DISTANCE 
 
